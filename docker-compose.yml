@@ -4,7 +4,7 @@ version: '2'
 services:
   # PHP + Nginx
   api:
-    image: ambientum/php:7.2-nginx
+    image: ambientum/php:7.4-nginx
     container_name: bycoders-api
     volumes:
       - ./api:/var/www/app
@@ -49,7 +49,7 @@ services:
 
   # Composer
   composer:
-    image: ambientum/php:7.2
+    image: ambientum/php:7.4
     container_name: bycoders-composer
     volumes:
       - ./api:/var/www/app
