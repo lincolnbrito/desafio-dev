@@ -47,17 +47,6 @@ services:
     networks:
       - backend
 
-  # Composer
-  composer:
-    image: ambientum/php:7.4
-    container_name: bycoders-composer
-    volumes:
-      - ./api:/var/www/app
-    command:
-      - composer    
-    networks:
-      - backend 
- 
 # Named volumes
 volumes:
   mysql-data:
