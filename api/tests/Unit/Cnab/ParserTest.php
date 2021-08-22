@@ -1,20 +1,21 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Cnab;
 
-use App\Parser\CnabParser;
+use App\Cnab\Parser;
+use App\Cnab\Template\ByCodersCnab;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class CnabParserTest extends TestCase
+class ParserTest extends TestCase
 {
     public $parser;
 
     public function setUp(): void
     {
-        $this->parser = new CnabParser;
+        $this->parser = new Parser(app(ByCodersCnab::class));
         parent::setUp();
     }
 
@@ -42,7 +43,6 @@ class CnabParserTest extends TestCase
         $validContent = "3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO       ";
         $result = $this->parser->parseLine($validContent);
         $this->assertIsArray($result);
-
     }
 
     /**
@@ -54,7 +54,7 @@ class CnabParserTest extends TestCase
         $result = $this->parser->parseLine($line);
 
         $expectedFormat = [
-            'transaction_type',
+            'type',
             'date',
             'amount',
             'document',
@@ -94,7 +94,7 @@ class CnabParserTest extends TestCase
                 1
             ],
             'multiline' => [
-                UploadedFile::fake()->createWithContent('CNAB.txt', file_get_contents(__DIR__.'/CNAB.txt')),
+                UploadedFile::fake()->createWithContent('CNAB.txt', file_get_contents(__DIR__ . '/CNAB.txt')),
                 21
             ]
         ];
@@ -116,7 +116,7 @@ class CnabParserTest extends TestCase
             'line1' => [
                 '3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO       ',
                 [
-                    'transaction_type' => 3,
+                    'type' => 3,
                     'date' => '20190301',
                     'amount' => 142.0,
                     'document' => '09620676017',
@@ -129,7 +129,7 @@ class CnabParserTest extends TestCase
             'line2' => [
                 '5201903010000013200556418150633123****7687145607MARIA JOSEFINALOJA DO Ó - MATRIZ',
                 [
-                    "transaction_type" => 5,
+                    "type" => 5,
                     "date" => "20190301",
                     "amount" => 132.0,
                     "document" => "55641815063",
