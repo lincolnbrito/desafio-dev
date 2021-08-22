@@ -10,13 +10,21 @@ class CnabParser
     /**
      * @throws Exception
      */
-    public function parseContent($rawContent)
+    public function parseContent($rawContent): array
     {
-        $exploded = explode(PHP_EOL, trim($rawContent));
+        $exploded = array_filter(explode(PHP_EOL, $rawContent));
 
         if(!self::isCnabHeader($exploded)) {
             throw new Exception('Invalid CNAB file format');
         }
+
+        $result = [];
+
+        foreach ($exploded as $line ) {
+            $result[] = $this->parseLine($line);
+        }
+
+        return $result;
     }
 
     /**
@@ -48,6 +56,10 @@ class CnabParser
      */
     public static function isCnabHeader($content): bool
     {
+        if(is_array($content) && empty($content)) {
+            return false;
+        }
+
         $content = is_array($content) ? $content[0] : $content;
         return mb_strlen(rtrim($content, PHP_EOL)) === 80;
     }
