@@ -7,6 +7,9 @@ use Exception;
 class CnabParser
 {
 
+    /**
+     * @throws Exception
+     */
     public function parseContent($rawContent)
     {
         $exploded = explode(PHP_EOL, trim($rawContent));

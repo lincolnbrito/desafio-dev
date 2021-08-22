@@ -16,14 +16,31 @@ class CnabParserTest extends TestCase
         parent::setUp();
     }
 
+    public function provideContent(): array
+    {
+        return [
+            'invalidSize' => [
+                ""
+            ],
+        ];
+    }
+
     /**
-     *
      * @throws Exception
      */
-    public function test_it_cannot_parse_empty_content() {
+    public function test_it_cannot_parse_empty_content(): void
+    {
         $this->expectExceptionMessage("Invalid CNAB file format");
 
         $content = "";
+        $this->parser->parseContent($content);
+    }
+
+    public function test_it_cannot_parse_invalid_size_content(): void
+    {
+        $this->expectExceptionMessage("Invalid CNAB file format");
+
+        $content = "3201903010000014200096206760174753****3153";
         $this->parser->parseContent($content);
     }
 }
