@@ -6,6 +6,8 @@ use App\Cnab\Contracts\Cnab;
 
 class ByCodersCnab implements Cnab
 {
+    public const LINE_SIZE = 80;
+
     public function isValidLine($content): bool
     {
         if(is_array($content) && empty($content)) {
@@ -13,10 +15,10 @@ class ByCodersCnab implements Cnab
         }
 
         $content = is_array($content) ? $content[0] : $content;
-        return mb_strlen(rtrim($content, PHP_EOL)) === 80;
+        return mb_strlen(rtrim($content, PHP_EOL)) === self::LINE_SIZE;
     }
 
-    public function parseLine($line): array
+    public function parse($line): array
     {
         return [
             'type' => (int) $line[0],

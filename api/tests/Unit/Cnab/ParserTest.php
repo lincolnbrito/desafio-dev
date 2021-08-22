@@ -7,6 +7,7 @@ use App\Cnab\Template\ByCodersCnab;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 use Tests\TestCase;
 
 class ParserTest extends TestCase
@@ -25,23 +26,26 @@ class ParserTest extends TestCase
      */
     public function test_it_cannot_parse_empty_content($content): void
     {
-        $this->expectExceptionMessage("Invalid CNAB file format");
+        $this->expectExceptionMessage("Invalid line format");
 
-        $this->parser->parseContent($content);
+        $this->parser->parse($content);
     }
 
     public function test_it_cannot_parse_invalid_size_content(): void
     {
-        $this->expectExceptionMessage("Invalid CNAB file format");
+        $this->expectExceptionMessage("Invalid line format");
 
         $content = "3201903010000014200096206760174753****3153";
-        $this->parser->parseContent($content);
+        $this->parser->parse($content);
     }
 
+    /**
+     * @throws Exception
+     */
     public function test_it_can_parse_line(): void
     {
         $validContent = "3201903010000014200096206760174753****3153153453JOÃO MACEDO   BAR DO JOÃO       ";
-        $result = $this->parser->parseLine($validContent);
+        $result = $this->parser->parse($validContent);
         $this->assertIsArray($result);
     }
 
@@ -51,7 +55,7 @@ class ParserTest extends TestCase
      */
     public function test_it_can_return_valid_parsed_line($line, $expected): void
     {
-        $result = $this->parser->parseLine($line);
+        $result = $this->parser->parse($line);
 
         $expectedFormat = [
             'type',
@@ -78,9 +82,14 @@ class ParserTest extends TestCase
     {
         Storage::fake();
         $path = Storage::putFileAs(null, $file,'CNAB.txt');
-        $contentFile = Storage::get($path);
+        $content = Storage::get($path);
 
-        $result = $this->parser->parseContent($contentFile);
+        $sanitizedData = array_filter(explode(PHP_EOL, $content));
+        $result = [];
+
+        foreach ($sanitizedData as $line){
+            $result[] = $this->parser->parse($line);
+        }
 
         $this->assertIsArray($result);
         $this->assertCount($expected, $result);
@@ -90,7 +99,7 @@ class ParserTest extends TestCase
     {
         return [
             'oneline' => [
-                UploadedFile::fake()->createWithContent('filename', "3201903010000014200096206760174753****3153153453AAAO MACEDO   BAR DO JOÃO       "),
+                UploadedFile::fake()->createWithContent('filename', "3201903010000014200096206760174753****3153153453AAAO MACEDO   BAR DO JOÃO       \n"),
                 1
             ],
             'multiline' => [
