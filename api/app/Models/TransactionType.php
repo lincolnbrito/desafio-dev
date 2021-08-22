@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionType extends Model
 {
     protected $fillable = [
+        'id',
         'description',
         'type',
         'operator'
