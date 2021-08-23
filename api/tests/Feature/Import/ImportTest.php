@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Import;
 
+use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ImportTest extends TestCase
@@ -15,7 +15,6 @@ class ImportTest extends TestCase
     {
         $this->seed();
 
-        Storage::fake();
         $file = UploadedFile::fake()->createWithContent(
             'CNAB.txt',
             implode(PHP_EOL, [
@@ -31,6 +30,46 @@ class ImportTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertDatabaseCount('transactions', 3);
+
+        $allStoresBalace = Store::all()->sum('balance');
+        $expectedTotalBalance = -132;
+        $this->assertEquals($expectedTotalBalance, $allStoresBalace);
+    }
+
+    public function test_it_can_import_default_file(): void
+    {
+        $this->seed();
+
+        $file = UploadedFile::fake()->createWithContent(
+            'CNAB.txt',
+            $this->getFileFixtureContent('CNAB.txt')
+        );
+
+        $response = $this->post(route('api.import'), [
+            'file' => $file
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseCount('transactions', 21);
+        $this->assertDatabaseCount('stores', 5);
+    }
+
+    public function test_it_can_import_large_file(): void
+    {
+        $this->seed();
+
+        $file = UploadedFile::fake()->createWithContent(
+            'CNAB.txt',
+            $this->getFileFixtureContent('CNAB_LARGE.txt')
+        );
+
+        $response = $this->post(route('api.import'), [
+            'file' => $file
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseCount('transactions', 1000);
+        $this->assertDatabaseCount('stores', 5);
     }
 
     public function test_it_should_validate_file(): void
