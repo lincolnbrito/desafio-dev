@@ -36,7 +36,6 @@ class StoreListTest extends TestCase
             ->assertJsonCount(2, 'data')
             ->assertJsonPath('data.0.balance', '0.00');
         $this->assertDatabaseCount('stores', 2);
-
     }
 
 }

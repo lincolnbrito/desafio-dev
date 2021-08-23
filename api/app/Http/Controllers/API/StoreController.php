@@ -45,14 +45,13 @@ class StoreController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return StoreResource|JsonResponse
      */
     public function show($id)
     {
-        //
+        $store = $this->service->find($id);
+        return new StoreResource($store);
     }
 
     /**

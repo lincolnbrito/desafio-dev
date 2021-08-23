@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::name('api.')
     ->group(function() {
-        Route::apiResource('stores', 'API\StoreController');
+        Route::apiResource('stores', 'API\StoreController')->only(['index', 'show']);
 });
 

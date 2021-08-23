@@ -16,7 +16,13 @@ class StoreService
        return $this->getModel()->paginate($limit);
     }
 
-    public function import($name, $owner) {
+    public function find($id)
+    {
+        return $this->getModel()->findOrFail($id);
+    }
+
+    public function import($name, $owner)
+    {
        $store = $this->getModel()->firstOrCreate([
            'name' => $name,
            'owner_id' => $owner->id
