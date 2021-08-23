@@ -19,8 +19,7 @@ Aplicação desenvolvida para a [vaga de desenvolvedor web na ByCoders.](INSTRUC
 - [Docker][docker]
 
 # Estrutura
-A aplicação utiliza [docker] para virtualização do ambiente. 
-Para facilitar a configuração dos serviços deve-se utilizar o comando `make`
+A aplicação utiliza [docker] para virtualização do ambiente.
 
 Estrutura de arquivos:
 
@@ -77,6 +76,7 @@ Para rodar os testes especícos
 - APP: ```make test-app```
 
 # Comandos úteis
+Para facilitar a utilização e configuração da aplicação utilize o comando `make`
 
 - `make start` Inicia os serviços da aplicação
 - `make setup` Instalação e configuração do ambiente
