@@ -41,6 +41,14 @@ class CnabImporterService
             $parsed = $this->parser->parse($line);
             $owner = $this->ownerService->import($parsed['owner']);
             $store = $this->storeService->import($parsed['store'], $owner);
+            $transaction = $this->transactionService->import([
+                'type' => $parsed['type'],
+                'date' => $parsed['date'],
+                'amount' => $parsed['amount'],
+                'document' => $parsed['document'],
+                'credit_card' => $parsed['credit_card'],
+                'hour' => $parsed['hour'],
+            ], $store);
         }
 
     }

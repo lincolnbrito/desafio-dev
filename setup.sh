@@ -46,7 +46,7 @@ printf "\n${ICON_STAR} Generating laravel app key...\n"
 docker-compose run --rm --no-deps api php artisan key:generate
 
 printf "\n${ICON_STAR} Migrating database...\n"
-docker-compose run --rm api php artisan migrate
+docker-compose run --rm api php artisan migrate --seed
 
 printf "\n--------------------------------------------------------------------------------------------\n"
 printf "${ICON_CLOCK} APP"

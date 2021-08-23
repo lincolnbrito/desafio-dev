@@ -11,7 +11,9 @@ class Transaction extends Model
         'processed_at',
         'amount',
         'credit_card',
-        'document'
+        'document',
+        'type_id',
+        'store_id'
     ];
 
     public function store(): BelongsTo
