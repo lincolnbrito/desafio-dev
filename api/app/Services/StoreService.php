@@ -13,7 +13,7 @@ class StoreService
 
     public function paginate($limit = 30)
     {
-       return $this->getModel()->paginate($limit);
+       return $this->getModel()->with(['owner'])->paginate($limit);
     }
 
     public function find($id)
