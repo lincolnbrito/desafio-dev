@@ -17,7 +17,7 @@
         <td>
           <span :class="getClass(transaction)">{{ transaction.amount | currency }}</span></td>
         <td>{{ transaction.credit_card }}</td>
-        <td>{{ transaction.document }}</td>
+        <td>{{ transaction.document | mask('###.###.###-##') }}</td>
       </tr>
       </tbody>
     </table>

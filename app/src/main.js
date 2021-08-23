@@ -4,6 +4,7 @@ import router from './router'
 import './main.css'
 import VueCurrencyFilter from 'vue-currency-filter'
 import VueMoment from 'vue-moment'
+import { VueMaskFilter } from 'v-mask'
 
 Vue.config.productionTip = false
 
@@ -19,6 +20,7 @@ Vue.use(VueCurrencyFilter,
 })
 
 Vue.use(VueMoment);
+Vue.filter('mask', VueMaskFilter);
 
 new Vue({
   router,

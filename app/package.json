@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "v-mask": "^2.2.4",
     "vue": "^2.6.11",
     "vue-currency-filter": "^5.2.0",
     "vue-moment": "^4.1.0",
