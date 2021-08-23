@@ -1,85 +1,118 @@
-# Desafio programação - para vaga desenvolvedor
+# Introdução
 
-Por favor leiam este documento do começo ao fim, com muita atenção.
-O intuito deste teste é avaliar seus conhecimentos técnicos em programação.
-O teste consiste em parsear [este arquivo de texto(CNAB)](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt) e salvar suas informações(transações financeiras) em uma base de dados a critério do candidato.
-Este desafio deve ser feito por você em sua casa. Gaste o tempo que você quiser, porém normalmente você não deve precisar de mais do que algumas horas.
+Aplicação desenvolvida para a [vaga de desenvolvedor web na ByCoders.](INSTRUCTIONS.md)
 
-# Instruções de entrega do desafio
+# Índice
+- [Requisitos](#requisitos)
+- [Estrutura](#estrutura)
+- [Tecnologias](#tecnologias)
+- [Preparação do ambiente](#preparação-do-ambiente)
+- [Iniciando a aplicação](#iniciando-a-aplicação)
+- [Rodando os testes](#rodando-os-testes)
+- [Comandos úteis](#comandos-úteis)
+- [Links](#links)
+- [Notas](#notas)
+- [Créditos](#créditos)
+- [Licença](#licença)
 
-1. Primeiro, faça um fork deste projeto para sua conta no Github (crie uma se você não possuir).
-2. Em seguida, implemente o projeto tal qual descrito abaixo, em seu clone local.
-3. Por fim, envie via email o projeto ou o fork/link do projeto para seu contato Bycoders_ com cópia para rh@bycoders.com.br.
+# Requisitos
+- [Docker][docker]
 
-# Descrição do projeto
+# Estrutura
+A aplicação utiliza [docker] para virtualização do ambiente. 
+Para facilitar a configuração dos serviços deve-se utilizar o comando `make`
 
-Você recebeu um arquivo CNAB com os dados das movimentações finanaceira de várias lojas.
-Precisamos criar uma maneira para que estes dados sejam importados para um banco de dados.
+Estrutura de arquivos:
 
-Sua tarefa é criar uma interface web que aceite upload do [arquivo CNAB](https://github.com/ByCodersTec/desafio-ruby-on-rails/blob/master/CNAB.txt), normalize os dados e armazene-os em um banco de dados relacional e exiba essas informações em tela.
+```
+ |_api
+ |_app
+ |-.env.example
+ |-CNAB.txt
+ |-docker-compose.yml
+ |-Makefile
+ |-setup.sh
+``` 
+- **api**: Contém os arquivos da API
+- **app**: Contém os arquivos do SPA (app frontend)
+- **.env.example**: Variáveis de ambiente dos serviços
+- **CNAB.txt**: Arquivo CNAB padrão para ser utilizado em testes
+- **docker-compose.yml**: Arquivo de configuração dos serviços docker
+- **Makefile**: Arquivo com rotinas úteis para instalação e configuração do ambiente
+- **setup.sh**: Script para preparar o ambiente instalando dependências e copiando arquivos
 
-**Sua aplicação web DEVE:**
+# Tecnologias
+- [Laravel][laravel]
+- [Vue.js][vue]
+- [MySQL][mysql]
 
-1. Ter uma tela (via um formulário) para fazer o upload do arquivo(pontos extras se não usar um popular CSS Framework )
-2. Interpretar ("parsear") o arquivo recebido, normalizar os dados, e salvar corretamente a informação em um banco de dados relacional, **se atente as documentações** que estão logo abaixo.
-3. Exibir uma lista das operações importadas por lojas, e nesta lista deve conter um totalizador do saldo em conta
-4. Ser escrita na sua linguagem de programação de preferência
-5. Ser simples de configurar e rodar, funcionando em ambiente compatível com Unix (Linux ou Mac OS X). Ela deve utilizar apenas linguagens e bibliotecas livres ou gratuitas.
-6. Git com commits atomicos e bem descritos
-7. PostgreSQL, MySQL ou SQL Server
-8. Ter testes automatizados
-9. Docker compose (Pontos extras se utilizar)
-10. Readme file descrevendo bem o projeto e seu setup
-11. Incluir informação descrevendo como consumir o endpoint da API
+# Preparação do ambiente
+```
+make setup
+```
+Este comando vai preparar o ambiente para a primeira utilização da aplicação. 
+Ele executará os seguintes passos: 
+- Baixar as imagens [docker], caso não estejam presentes localmente
+- Copiar os arquivos .env do docker, API e da aplicação frontend
+- Instalar as dependências da API e da aplicação frontend
 
-**Sua aplicação web não precisa:**
+# Iniciando a aplicação
+```
+make start
+```
+Este comando levantará todos os serviços [docker] utilizados pela aplicação
+e disponibilizará os endereços:
+- API: http://localhost
+- APP: http://localhost:8080
 
-1. Lidar com autenticação ou autorização (pontos extras se ela fizer, mais pontos extras se a autenticação for feita via OAuth).
-2. Ser escrita usando algum framework específico (mas não há nada errado em usá-los também, use o que achar melhor).
-3. Documentação da api.(Será um diferencial e pontos extras se fizer)
+# Rodando os testes
+```
+make test
+```
+Este comando irá rodar os testes unitários da API e aplicação frontend.
 
-# Documentação do CNAB
+Para rodar os testes especícos
+- API: ```make test-api```
+- APP: ```make test-app```
 
-| Descrição do campo  | Inicio | Fim | Tamanho | Comentário
-| ------------- | ------------- | -----| ---- | ------
-| Tipo  | 1  | 1 | 1 | Tipo da transação
-| Data  | 2  | 9 | 8 | Data da ocorrência
-| Valor | 10 | 19 | 10 | Valor da movimentação. *Obs.* O valor encontrado no arquivo precisa ser divido por cem(valor / 100.00) para normalizá-lo.
-| CPF | 20 | 30 | 11 | CPF do beneficiário
-| Cartão | 31 | 42 | 12 | Cartão utilizado na transação 
-| Hora  | 43 | 48 | 6 | Hora da ocorrência atendendo ao fuso de UTC-3
-| Dono da loja | 49 | 62 | 14 | Nome do representante da loja
-| Nome loja | 63 | 81 | 19 | Nome da loja
+# Comandos úteis
 
-# Documentação sobre os tipos das transações
+- `make start` Inicia os serviços da aplicação
+- `make setup` Instalação e configuração do ambiente
+- `make stop` Para todos os serviços
+- `make logs` Exibe os logs dos serviços
+- `make fresh` **ATENÇÃO** Remove os arquivos .env, todas as dependências e apaga todo o banco de dados
+- `make down` Remove todos os serviços
+- `make test` Roda todos os testes unitários (API e APP)
+- `make test-api` Roda os testes unitários da API
+- `make test-app` Roda os testes unitários da aplicação frontend
 
-| Tipo | Descrição | Natureza | Sinal |
-| ---- | -------- | --------- | ----- |
-| 1 | Débito | Entrada | + |
-| 2 | Boleto | Saída | - |
-| 3 | Financiamento | Saída | - |
-| 4 | Crédito | Entrada | + |
-| 5 | Recebimento Empréstimo | Entrada | + |
-| 6 | Vendas | Entrada | + |
-| 7 | Recebimento TED | Entrada | + |
-| 8 | Recebimento DOC | Entrada | + |
-| 9 | Aluguel | Saída | - |
 
-# Avaliação
+# Links
+- Documentação da API: https://documenter.getpostman.com/view/4094324/TzzEmYnS
 
-Seu projeto será avaliado de acordo com os seguintes critérios.
+# Notas
 
-1. Sua aplicação preenche os requerimentos básicos?
-2. Você documentou a maneira de configurar o ambiente e rodar sua aplicação?
-3. Você seguiu as instruções de envio do desafio?
-4. Qualidade e cobertura dos testes unitários.
+- **Estratégia de importação de arquivos**: 
+Criei uma solução para evitar a duplicação dos registros, caso um arquivo seja importado mais de uma vez. Basicamente salvo um registro na tabela `import_history`
+contendo o path, nome e hash do arquivo importado. Antes de efetuar uma importação pesquiso se existe um histórico com o mesmo hash do arquivo atual, caso não exista prossigo com a importação normalmente.
+- **Pontos de melhoria**: 
+  - Não foquei na validação no frontend, poderia ter utilizado alguma lib de validação como o Vuelidate
+  - Procurei criar uma camada simples para services, mas poderia ter utilizado scopes dos próprios models.
+  - No caso do arquivo CNAB ser muito grande poderia ser utilizado a estrutura de [filas](https://laravel.com/docs/7.x/queues) do [Laravel][laravel],
+dessa forma melhoraria a performance e experiência do usuário.
+  - Tratar a paginação no frontend
+  - Exibir componente de `loading`
 
-Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
+# Créditos
+Lincoln Silva Brito <lincoln.sbrito@gmail.com>
 
-# Referência
+# Licença
+[MIT]
 
-Este desafio foi baseado neste outro desafio: https://github.com/lschallenges/data-engineering
-
----
-
-Boa sorte!
+[github]:https://github.com
+[laravel]:https://laravel.com/
+[vue]:https://vuejs.org/
+[mysql]:https://www.mysql.com/
+[docker]:https://www.docker.com/
+[mit]:http://opensource.org/licenses/MIT
