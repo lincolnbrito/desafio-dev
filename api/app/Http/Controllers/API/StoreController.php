@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Store\StoreResource;
+use App\Http\Resources\StoreResource;
 use App\Services\StoreService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,17 +34,6 @@ class StoreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * @param $id
      * @return StoreResource|JsonResponse
      */
@@ -52,28 +41,5 @@ class StoreController extends Controller
     {
         $store = $this->service->find($id);
         return new StoreResource($store);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
