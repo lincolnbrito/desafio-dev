@@ -26,9 +26,17 @@ fi
 
 printf "${NO_COLOR}\n"
 
-printf "${ICON_STAR} Copying Laravel .env file... "
+printf "${ICON_STAR} Copying Api .env file... "
 if [ ! -f api/.env ]; then
   cp api/.env.example api/.env
+  printf "${COLOR_GREEN}${ICON_CHECK}"
+else
+  printf "${COLOR_RED}${ICON_TIMES} File already exists!"
+fi
+
+printf "${ICON_STAR} Copying App .env file... "
+if [ ! -f app/.env ]; then
+  cp app/.env.example app/.env
   printf "${COLOR_GREEN}${ICON_CHECK}"
 else
   printf "${COLOR_RED}${ICON_TIMES} File already exists!"
