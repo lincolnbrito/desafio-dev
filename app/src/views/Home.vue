@@ -1,18 +1,34 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <StoreList :stores="stores"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import StoreList from '@/components/StoreList.vue'
+import StoreService from '@/services/store'
 
 export default {
-  name: 'Home',
+  data() {
+     return {
+       stores: []
+     }
+  },
+  methods: {
+    async load() {
+      try{
+        let response = await StoreService.list()
+        this.stores = response.data.data
+      } catch(e) {
+        console.log(e);
+      }
+    }
+  },
+  mounted() {
+    this.load()
+  },
   components: {
-    HelloWorld
-  }
+    StoreList
+  },
 }
 </script>
