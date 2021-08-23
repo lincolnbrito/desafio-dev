@@ -40,4 +40,15 @@ class TransactionService
     public function getType($id) {
         return TransactionType::find($id);
     }
+
+    public function findByStore($storeId) {
+        return $this->getModel()
+            ->where('store_id', $storeId)
+            ->paginate(30);
+    }
+
+    public function find($id) {
+        return $this->getModel()
+            ->findOrFail($id);
+    }
 }

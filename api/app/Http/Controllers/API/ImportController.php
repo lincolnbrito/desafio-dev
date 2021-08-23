@@ -29,7 +29,7 @@ class ImportController extends Controller
         } catch(\Exception $exception) {
             return response()->json([
                 'message' => $exception->getMessage()
-            ]);
+            ], 400);
         }
     }
 }

@@ -37,6 +37,10 @@ class CnabImporterService
     {
         $this->prepare($template);
 
+        if(!$this->parser->isValid($content[0])) {
+            throw new Exception('Invalid file format');
+        }
+
         $result = [];
         foreach ($content as $line) {
             $parsed = $this->parser->parse($line);
