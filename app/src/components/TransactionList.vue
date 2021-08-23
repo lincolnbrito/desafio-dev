@@ -14,7 +14,8 @@
       <tr v-for="transaction in transactions" :key="transaction.id">
         <td>{{ transaction.processed_at }}</td>
         <td>{{ transaction.type.description }}</td>
-        <td>{{ transaction.amount }}</td>
+        <td>
+          <span :class="getClass(transaction)">{{ transaction.amount }}</span></td>
         <td>{{ transaction.credit_card }}</td>
         <td>{{ transaction.document }}</td>
       </tr>
@@ -28,6 +29,14 @@ export default {
   props: {
     transactions: {
       type: Array
+    }
+  },
+  methods: {
+    getClass(transaction) {
+      return {
+        'danger': transaction.type.operator === '-',
+        'success': transaction.type.operator === '+'
+      }
     }
   }
 }

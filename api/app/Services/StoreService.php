@@ -18,7 +18,7 @@ class StoreService
 
     public function find($id)
     {
-        return $this->getModel()->findOrFail($id);
+        return $this->getModel()->with(['owner'])->findOrFail($id);
     }
 
     public function import($name, $owner)

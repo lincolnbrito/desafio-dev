@@ -15,7 +15,7 @@
           <td>{{ store.owner.name }}</td>
           <td>{{ store.balance}}</td>
           <td>
-            <router-link :to="{name:'Store', params: {store: store.id}}">Transações</router-link>
+            <router-link :to="{name:'Store', params: {id: store.id}}">Transações</router-link>
           </td>
         </tr>
       </tbody>

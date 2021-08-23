@@ -30,4 +30,11 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+ .danger {
+   color: red
+ }
+.success {
+  color: green
+}
 </style>

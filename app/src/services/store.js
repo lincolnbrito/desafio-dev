@@ -9,6 +9,10 @@ class StoreService extends Api {
         return this.client.get('');
     }
 
+    show(store) {
+        return this.client.get(`/${store}`);
+    }
+
 }
 
 export default new StoreService()
