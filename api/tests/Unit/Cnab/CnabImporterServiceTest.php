@@ -32,10 +32,11 @@ class CnabImporterServiceTest extends TestCase
     public function test_can_import_content(): void
     {
         $this->seed();
+        Storage::fake();
 
         $arrayLines = file($this->getFixtureDir()."/CNAB.txt", FILE_IGNORE_NEW_LINES );
-
         $this->service->import($arrayLines);
+
         $this->assertDatabaseCount('stores', 5);
         $this->assertDatabaseCount('owners', 4);
         $this->assertDatabaseCount('transactions', 21);
@@ -47,7 +48,6 @@ class CnabImporterServiceTest extends TestCase
     public function test_it_should_return_valid_balance($file, $expected_amount): void
     {
         $this->seed();
-
         Storage::fake();
         $path = Storage::putFileAs(null, $file,'CNAB.txt');
         $content = Storage::get($path);

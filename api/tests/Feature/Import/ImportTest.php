@@ -5,6 +5,7 @@ namespace Tests\Feature\Import;
 use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ImportTest extends TestCase
@@ -14,6 +15,7 @@ class ImportTest extends TestCase
     public function test_it_can_import_valid_file(): void
     {
         $this->seed();
+        Storage::fake();
 
         $file = UploadedFile::fake()->createWithContent(
             'CNAB.txt',
@@ -39,6 +41,7 @@ class ImportTest extends TestCase
     public function test_it_can_import_default_file(): void
     {
         $this->seed();
+        Storage::fake();
 
         $file = UploadedFile::fake()->createWithContent(
             'CNAB.txt',
@@ -57,6 +60,7 @@ class ImportTest extends TestCase
     public function test_it_can_import_large_file(): void
     {
         $this->seed();
+        Storage::fake();
 
         $file = UploadedFile::fake()->createWithContent(
             'CNAB.txt',
@@ -74,6 +78,8 @@ class ImportTest extends TestCase
 
     public function test_it_should_validate_file(): void
     {
+        Storage::fake();
+
         $response = $this->json('POST', route('api.import'), ['file' => 'invalid'],
             ['Accept' => 'application/json']
         );
