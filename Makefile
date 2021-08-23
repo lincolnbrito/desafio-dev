@@ -10,7 +10,7 @@ ICON_TEST=\360\237\244\226
 start:
 	@printf "\n${ICON_CLOCK}  Starting application. Wait...\n\n"
 	@printf "${NC}"
-	$(dc) up -d app api mysql
+	$(dc) up app api mysql
 	@printf "\n${COLOR_GREEN}${ICON_EARTH} Application STARTED!${NO_COLOR}\n"
 	@printf "\n- App: http://localhost:8080"
 	@printf "\n- Api: http://localhost\n\n"
