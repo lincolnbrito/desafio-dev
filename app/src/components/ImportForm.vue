@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="upload">
     <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-    <button type="submit">Enviar</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
   </form>
 </template>
 

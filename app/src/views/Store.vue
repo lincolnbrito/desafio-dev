@@ -1,7 +1,8 @@
 <template>
   <div class="home">
+    <h1 class="">Loja</h1>
     <StoreDetails :store="store" v-if="store" />
-    <h3>Histórico de Transações</h3>
+    <h3 class="mt-8">Histórico de Transações</h3>
     <TransactionList :transactions="transactions" />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table class="striped">
       <thead>
         <tr>
           <th>Loja</th>
@@ -13,9 +13,11 @@
         <tr v-for="store in stores" :key="store.id">
           <td>{{ store.name }}</td>
           <td>{{ store.owner.name }}</td>
-          <td>{{ store.balance}}</td>
           <td>
-            <router-link :to="{name:'Store', params: {id: store.id}}">Transações</router-link>
+            <span :class="getClass(store.balance)">{{ store.balance}}</span>
+          </td>
+          <td>
+            <router-link :to="{name:'Store', params: {id: store.id}}">Visualizar</router-link>
           </td>
         </tr>
       </tbody>
@@ -29,6 +31,14 @@ export default {
   props: {
     stores: {
       type: Array
+    }
+  },
+  methods: {
+    getClass(balance) {
+      return {
+        'danger': balance < 0 ,
+        'success': balance > 0
+      }
     }
   }
 }

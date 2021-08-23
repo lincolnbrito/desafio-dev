@@ -1,5 +1,5 @@
 <template>
-  <table>
+  <table class="striped">
     <thead>
       <tr>
         <th>Loja</th>
