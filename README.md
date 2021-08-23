@@ -45,6 +45,7 @@ Estrutura de arquivos:
 - [Laravel][laravel]
 - [Vue.js][vue]
 - [MySQL][mysql]
+- [Docker][docker]
 
 # Preparação do ambiente
 ```
