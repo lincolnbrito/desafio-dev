@@ -14,7 +14,7 @@
           <td>{{ store.name }}</td>
           <td>{{ store.owner.name }}</td>
           <td>
-            <span :class="getClass(store.balance)">{{ store.balance}}</span>
+            <span :class="getClass(store.balance)">{{ store.balance | currency}}</span>
           </td>
           <td>
             <router-link :to="{name:'Store', params: {id: store.id}}">Visualizar</router-link>

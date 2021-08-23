@@ -12,10 +12,10 @@
       </thead>
       <tbody>
       <tr v-for="transaction in transactions" :key="transaction.id">
-        <td>{{ transaction.processed_at }}</td>
+        <td>{{ transaction.processed_at | moment('DD/MM/YYYY H:m:ss') }}</td>
         <td>{{ transaction.type.description }}</td>
         <td>
-          <span :class="getClass(transaction)">{{ transaction.amount }}</span></td>
+          <span :class="getClass(transaction)">{{ transaction.amount | currency }}</span></td>
         <td>{{ transaction.credit_card }}</td>
         <td>{{ transaction.document }}</td>
       </tr>
