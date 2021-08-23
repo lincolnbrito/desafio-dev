@@ -15,7 +15,7 @@ class TransactionTypeTableSeeder extends Seeder
     {
         $records = [];
 
-       foreach(TransactionTypeEnum::getValues() as $type) {
+        foreach(TransactionTypeEnum::getValues() as $type) {
             $records[] =  [
                 'id' => $type['id'],
                 'description' => $type['description'],
@@ -27,7 +27,6 @@ class TransactionTypeTableSeeder extends Seeder
         }
 
         $model = new TransactionType;
-        dd($model->insert($records));
-
+        $model->insert($records);
     }
 }

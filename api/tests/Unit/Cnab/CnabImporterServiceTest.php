@@ -26,12 +26,13 @@ class CnabImporterServiceTest extends TestCase
         $this->assertTrue(is_subclass_of($template, Cnab::class));
     }
 
-    public function test_imported_content_size()
+    public function test_can_import_content()
     {
         $arrayLines = file(__DIR__.DIRECTORY_SEPARATOR."CNAB.txt", FILE_IGNORE_NEW_LINES );
 
-        $result = $this->service->import($arrayLines);
-        $this->assertCount(21, $result);
+        $this->service->import($arrayLines);
+        $this->assertDatabaseCount('stores', 5);
+        $this->assertDatabaseCount('owners', 4);
     }
 
 

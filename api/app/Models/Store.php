@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Store extends Model
 {
     protected $fillable = [
+        'owner_id',
         'name',
         'balance'
     ];
