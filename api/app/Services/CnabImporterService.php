@@ -37,6 +37,7 @@ class CnabImporterService
     {
         $this->prepare($template);
 
+        $result = [];
         foreach ($content as $line) {
             $parsed = $this->parser->parse($line);
             $owner = $this->ownerService->import($parsed['owner']);
@@ -49,27 +50,40 @@ class CnabImporterService
                 'credit_card' => $parsed['credit_card'],
                 'hour' => $parsed['hour'],
             ], $store);
+            $result[] = [$owner->name, $store->name, $transaction];
         }
 
+        return $result;
     }
 
-
+    /**
+     * @param $template
+     */
     protected function prepare($template): void
     {
         $this->setTemplate($template);
         $this->parser = new Parser(app($this->resolveTemplate()));
     }
 
+    /**
+     * @return string|null
+     */
     public function resolveTemplate(): ?string
     {
         return $this->templates[$this->template] ?? null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTemplateClass(): ?string
     {
         return $this->resolveTemplate();
     }
 
+    /**
+     * @param $template
+     */
     public function setTemplate($template): void
     {
         $this->template = $template;

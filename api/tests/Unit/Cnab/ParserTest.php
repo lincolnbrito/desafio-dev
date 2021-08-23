@@ -7,16 +7,17 @@ use App\Cnab\Template\ByCodersCnab;
 use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 use Tests\TestCase;
 
 class ParserTest extends TestCase
 {
     public $parser;
+    public $fileDummy;
 
     public function setUp(): void
     {
         $this->parser = new Parser(app(ByCodersCnab::class));
+        $this->fileDummy = $this->getFileFixtureContent("CNAB.txt");
         parent::setUp();
     }
 
@@ -103,7 +104,7 @@ class ParserTest extends TestCase
                 1
             ],
             'multiline' => [
-                UploadedFile::fake()->createWithContent('CNAB.txt', file_get_contents(__DIR__ . '/CNAB.txt')),
+                UploadedFile::fake()->createWithContent('CNAB.txt', $this->getFileFixtureContent('CNAB.txt')),
                 21
             ]
         ];

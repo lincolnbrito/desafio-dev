@@ -33,7 +33,7 @@ class CnabImporterServiceTest extends TestCase
     {
         $this->seed();
 
-        $arrayLines = file(__DIR__.DIRECTORY_SEPARATOR."CNAB.txt", FILE_IGNORE_NEW_LINES );
+        $arrayLines = file($this->getFixtureDir()."/CNAB.txt", FILE_IGNORE_NEW_LINES );
 
         $this->service->import($arrayLines);
         $this->assertDatabaseCount('stores', 5);

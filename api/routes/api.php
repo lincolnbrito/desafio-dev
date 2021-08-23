@@ -23,5 +23,6 @@ Route::name('api.')
         Route::apiResource('stores', 'API\StoreController')->only(['index', 'show']);
         Route::apiResource('owners', 'API\OwnerController')->only(['index', 'show']);
         Route::apiResource('transaction-types', 'API\TransactionTypeController')->only(['index', 'show']);
+        Route::post('import', 'API\ImportController')->name('import');
 });
 
