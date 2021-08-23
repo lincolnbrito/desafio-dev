@@ -21,5 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::name('api.')
     ->group(function() {
         Route::apiResource('stores', 'API\StoreController')->only(['index', 'show']);
+        Route::apiResource('owners', 'API\OwnerController')->only(['index', 'show']);
 });
 
